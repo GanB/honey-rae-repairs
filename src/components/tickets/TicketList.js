@@ -7,6 +7,8 @@ export const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [emergency, setEmergency] = useState(false);
+  const [isTicketOpen, setIsTicketOpen] = useState(false);
+
   const localHoneyUser = localStorage.getItem("honey_user");
   const honeyUserObject = JSON.parse(localHoneyUser);
 
@@ -46,6 +48,21 @@ export const TicketList = () => {
     }
   }, [emergency]);
 
+  useEffect(() => {
+    if (isTicketOpen) {
+      const openTickets = tickets.filter(
+        (ticket) =>
+          ticket.userId === honeyUserObject.id && ticket.dateCompleted === ""
+      );
+      setFilteredTickets(openTickets);
+    } else {
+      const myTickets = tickets.filter(
+        (ticket) => ticket.userId === honeyUserObject.id
+      );
+      setFilteredTickets(myTickets);
+    }
+  }, [isTicketOpen]);
+
   return (
     <>
       {honeyUserObject.staff ? (
@@ -66,9 +83,13 @@ export const TicketList = () => {
           </button>
         </>
       ) : (
-        <button onClick={() => navigate("/ticket/create")}>
-          Create Ticket
-        </button>
+        <>
+          <button onClick={() => navigate("/ticket/create")}>
+            Create Ticket
+          </button>
+          <button onClick={() => setIsTicketOpen(true)}>Open Tickets</button>
+          <button onClick={() => setIsTicketOpen(false)}>All My Tickets</button>
+        </>
       )}
       <h2>List of Tickets</h2>
       <article className="tickets">
