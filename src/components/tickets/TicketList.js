@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Tickets.css";
 
-export const TicketList = () => {
+export const TicketList = (props) => {
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
@@ -62,6 +62,18 @@ export const TicketList = () => {
       setFilteredTickets(myTickets);
     }
   }, [isTicketOpen]);
+
+  useEffect(() => {
+    const searchedTickets = tickets.filter(
+      (ticket) =>
+        ticket.description[
+          ticket.description
+            .toLowerCase()
+            .search(props.searchTermState.toLowerCase())
+        ]
+    );
+    setFilteredTickets(searchedTickets);
+  }, [props.searchTermState]);
 
   return (
     <>
