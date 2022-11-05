@@ -4,7 +4,7 @@ export const Employee = (props) => {
   return (
     <section className="employee">
       <div>
-        <Link to={`/employees/${props.employee.id}`}>
+        <Link className="employee__link" to={`/employee/${props.employee.id}`}>
           Name: {props.employee.fullName}
         </Link>
       </div>

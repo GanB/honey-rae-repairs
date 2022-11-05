@@ -18,7 +18,7 @@ export const EmployeeDetails = () => {
 
   return (
     <section className="employee">
-      <header className="employee_header">
+      <header className="employee__header">
         {employeeDetails?.user?.fullName}
       </header>
       <div>Email: {employeeDetails?.user?.email}</div>
